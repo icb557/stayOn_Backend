@@ -22,6 +22,7 @@ Table Publicaciones {
 Table Material {
   id integer [primary key]
   uri varchar
+  tipo varchar
   id_publicacion varchar [not null]
 }
 

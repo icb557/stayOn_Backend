@@ -8,6 +8,7 @@ export class PostController {
   getAllPosts = async (req, res) => {
     try {
       const posts = await Post.findAll({
+        attributes: { exclude: ['topicId'] },
         include: [
           {
             model: Comment,
@@ -23,6 +24,7 @@ export class PostController {
             model: Topic
           }
         ]
+
       })
       res.json(posts)
     } catch (error) {
@@ -37,7 +39,7 @@ export class PostController {
 
       let newPost = await Post.create(post)
       mats.forEach(async (element) => {
-        await Material.create({ uri: element, postId: newPost.id })
+        await Material.create({ name: element.name, uri: element.uri, type: element.type, postId: newPost.id })
       })
 
       newPost = { ...newPost.dataValues, materials: [...mats] }
@@ -52,6 +54,7 @@ export class PostController {
     try {
       const { id } = req.params
       const post = await Post.findByPk(id, {
+        attributes: { exclude: ['topicId'] },
         include: [
           {
             model: Comment,
@@ -84,6 +87,7 @@ export class PostController {
       const { userId } = req.params
       const post = await Post.findAll({
         where: { userId: { [Op.iLike]: userId } },
+        attributes: { exclude: ['topicId'] },
         include: [
           {
             model: Comment,

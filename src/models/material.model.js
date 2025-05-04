@@ -7,7 +7,9 @@ export const Material = sequelize.define('Material', {
     primaryKey: true,
     autoIncrement: true
   },
-  uri: { type: DataTypes.STRING, allowNull: false }
+  name: { type: DataTypes.STRING, allowNull: false },
+  uri: { type: DataTypes.STRING, allowNull: false },
+  type: { type: DataTypes.STRING, allowNull: false }
 }, {
   timestamps: false
 })

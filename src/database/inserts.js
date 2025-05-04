@@ -86,7 +86,12 @@ export async function insertData () {
       topicId: 2
     },
     {
-      message: 'I am gay! ❤️🏳️‍🌈',
+      message: `I am gay! ❤️🏳️‍🌈 
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+      Praesent ex lectus, sodales et maximus sit amet, vehicula ut sapien. 
+      Fusce eu pulvinar nisl. Nunc vitae iaculis sapien. 
+      Nunc dapibus metus nunc, id sagittis metus elementum et. Etiam viverra malesuada leo eget hendrerit. 
+      Nulla commodo venenatis scelerisque. Vivamus in vulputate odio.`,
       date: new Date('2025-05-03T11:00:00Z'),
       userId: 'juan_estrada82212@elpoli.edu.co',
       topicId: 9
@@ -101,32 +106,52 @@ export async function insertData () {
 
   const materials = [
     {
+      name: 'doc1',
       uri: 'https://example.com/material1.pdf',
+      type: 'document',
       postId: 1
     },
     {
-      uri: 'https://example.com/material2.pdf',
+      name: 'doc2',
+      uri: 'https://example.com/material2.docx',
+      type: 'document',
       postId: 2
     },
     {
-      uri: 'https://example.com/material3.pdf',
+      name: 'img1',
+      uri: 'https://example.com/material3.jpg',
+      type: 'image',
       postId: 3
     },
     {
-      uri: 'https://example.com/material4.pdf',
+      name: 'vid1',
+      uri: 'https://example.com/material4.mp4',
+      type: 'video',
       postId: 4
     },
     {
-      uri: 'https://example.com/material5.pdf',
+      name: 'url1',
+      uri: 'https://example.com/material5.html',
+      type: 'url',
       postId: 5
     },
     {
-      uri: 'https://example.com/material6.pdf',
-      postId: 1
+      name: 'url2',
+      uri: 'https://example.com/material6.php',
+      type: 'url',
+      postId: 4
     },
     {
-      uri: 'https://example.com/material7.pdf',
-      postId: 1
+      name: 'img2',
+      uri: 'https://example.com/material7.png',
+      type: 'image',
+      postId: 4
+    },
+    {
+      name: 'doc3',
+      uri: 'https://example.com/material8.pdf',
+      type: 'document',
+      postId: 4
     }
   ]
 
