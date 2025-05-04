@@ -11,7 +11,6 @@ export const Post = sequelize.define('Post', {
     autoIncrement: true
   },
   message: { type: DataTypes.TEXT, allowNull: false },
-  link: { type: DataTypes.STRING, allowNull: false },
   date: { type: DataTypes.DATE, allowNull: false }
 }, {
   timestamps: false

@@ -1,0 +1,59 @@
+Table Personas {
+  correo varchar [primary key]
+  contraseña varchar
+  nombre varchar
+  segundo_nombre varchar
+  primer_apellido varchar
+  segundo_apellido varchar
+  carrera varchar
+  rol varchar
+  edad integer
+  
+}
+
+Table Publicaciones {
+  id integer [primary key]
+  mensaje text
+  id_persona varchar [not null]
+  id_tema integer [not null]
+  fecha datetime
+}
+
+Table Material {
+  id integer [primary key]
+  uri varchar
+  id_publicacion varchar [not null]
+}
+
+Table Comentarios {
+  id_publicacion integer [not null]
+  mensaje text
+  fecha datetime
+  id_persona varchar [not null]
+}
+
+Table Temas {
+  id integer [primary key]
+  nombre varchar
+}
+
+Table Seguidores {
+  id_seguidor varchar [not null]
+  id_seguido varchar [not null]
+}
+
+Table Preferencias {
+  id_usuario varchar [not null]
+  id_tema varchar [not null]
+}
+
+// Definición de relaciones
+Ref: Publicaciones.id_persona > Personas.correo
+Ref: Comentarios.id_publicacion > Publicaciones.id
+Ref: Comentarios.id_persona > Personas.correo
+Ref: Seguidores.id_seguidor > Personas.correo
+Ref: Seguidores.id_seguido > Personas.correo
+Ref: Publicaciones.id_tema > Temas.id
+Ref: Material.id_publicacion > Publicaciones.id
+Ref: Preferencias.id_usuario > Personas.correo
+Ref: Preferencias.id_tema > Temas.id

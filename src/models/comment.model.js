@@ -7,7 +7,8 @@ export const Comment = sequelize.define('Comment', {
     primaryKey: true,
     autoIncrement: true
   },
-  comment: { type: DataTypes.TEXT, allowNull: false }
+  message: { type: DataTypes.TEXT, allowNull: false },
+  date: { type: DataTypes.DATE, allowNull: false }
 }, {
   timestamps: false
 })

@@ -1,13 +1,16 @@
-import express from "express";
-import "dotenv/config";
-import cors from "cors";
-import { userRouters } from "./routes/user.routes.js";
+import express from 'express'
+import 'dotenv/config'
+import cors from 'cors'
 
-const app = express();
+import { userRouters } from './routes/user.routes.js'
+import { postRouters } from './routes/post.routes.js'
 
-app.use(cors());
-app.use(express.json());
+const app = express()
 
-app.use(userRouters);
+app.use(cors())
+app.use(express.json())
 
-export default app;
+app.use(userRouters)
+app.use(postRouters)
+
+export default app
