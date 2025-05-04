@@ -155,14 +155,14 @@ export class UserController {
         expiresIn: '1h'
       })
 
-      const resetLink = `http://localhost:4200/reset-password/${token}`
+      const resetLink = `http://localhost:4200/reset-password?token=${token}`
 
       await sendEmail(
         email,
         'Password Reset Request',
         `<body style="margin: 0; padding: 0; background-color: #194866; font-family: Arial, sans-serif; color: white;">
           <div style="max-width: 500px; margin: 40px auto; background-color: #253046; padding: 40px; border-radius: 10px; text-align: center;">
-            <h1 style="color: #f3a32f; font-size: 36px; margin-bottom: 20px;">StyOn</h1>
+            <h1 style="color: #f3a32f; font-size: 36px; margin-bottom: 20px;">StayOn</h1>
             <p style="font-size: 18px; margin-bottom: 30px; color: white;">
               You requested a password reset. Click the button below to reset your password:
             </p>
@@ -183,10 +183,10 @@ export class UserController {
   changePassword = async (req, res) => {
     try {
       const { token, newPassword } = req.body
-      const decoded = jwt.verify(token, process.env.RESET_KEY ?? 'LOLOMANSOLO')
+      const decoded = jwt.verify(token, process.env.RESET_KEY ?? 'LOLOMANSOLO2')
       const user = await User.findByPk(decoded.email)
 
-      if (!user) return res.status(400).send('invalid or expired token')
+      if (!user) return res.status(400).json({ messaage: 'invalid or expired token' })
 
       user.password = await bcrypt.hash(newPassword, 10)
       await user.save()
