@@ -7,8 +7,13 @@ import nodemailer from "nodemailer";
 export class UserController {
   getAllUsers = async (req, res) => {
     try {
+<<<<<<< HEAD
       const users = await User.findAll();
       res.json(users);
+=======
+      const users = await User.findAll({ attributes: { exclude: ['password'] } })
+      res.json(users)
+>>>>>>> 898f0609d5ca51239647e9cd34ab6d88b876c7c3
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -67,8 +72,13 @@ export class UserController {
 
   getUser = async (req, res) => {
     try {
+<<<<<<< HEAD
       const { email } = req.params;
       const user = await User.findByPk(email);
+=======
+      const { email } = req.params
+      const user = await User.findByPk(email, { attributes: { exclude: ['password'] } })
+>>>>>>> 898f0609d5ca51239647e9cd34ab6d88b876c7c3
       if (user) {
         res.json(user);
       } else {
