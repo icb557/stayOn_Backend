@@ -3,6 +3,7 @@ import { User } from '../models/user.model.js'
 // import { Follower } from '../models/follower.model.js'
 import { Post } from '../models/post.model.js'
 import { Comment } from '../models/comment.model.js'
+import { Topic } from '../models/topic.model.js'
 
 export class ProfileController {
   getProfile = async (req, res) => {
@@ -15,12 +16,15 @@ export class ProfileController {
           {
             model: Post,
             as: 'Posts',
-            attributes: { exclude: ['userId'] },
+            attributes: { exclude: ['userId', 'topicId'] },
             include: [
               {
                 model: Comment,
                 as: 'Comments',
                 attributes: { exclude: ['postId'] }
+              },
+              {
+                model: Topic
               }
             ]
           },
