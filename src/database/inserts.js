@@ -4,6 +4,7 @@ import { Topic } from '../models/topic.model.js'
 import { Post } from '../models/post.model.js'
 import { Material } from '../models/material.model.js'
 import { Comment } from '../models/comment.model.js'
+import { Follower } from '../models/follower.model.js'
 
 export async function insertData () {
   const password = await bcrypt.hash('P@ssw0rd', 12)
@@ -176,10 +177,26 @@ export async function insertData () {
     }
   ]
 
+  const followers = [
+    { followedId: 'isac_cortes82212@elpoli.edu.co', followerId: 'juan_adams82212@elpoli.edu.co' },
+    { followedId: 'isac_cortes82212@elpoli.edu.co', followerId: 'juan_estrada82212@elpoli.edu.co' },
+    { followedId: 'isac_cortes82212@elpoli.edu.co', followerId: 'emmanuel_bolivar82212@elpoli.edu.co' },
+    { followedId: 'juan_adams82212@elpoli.edu.co', followerId: 'isac_cortes82212@elpoli.edu.co' },
+    { followedId: 'juan_adams82212@elpoli.edu.co', followerId: 'juan_estrada82212@elpoli.edu.co' },
+    { followedId: 'juan_adams82212@elpoli.edu.co', followerId: 'emmanuel_bolivar82212@elpoli.edu.co' },
+    { followedId: 'juan_estrada82212@elpoli.edu.co', followerId: 'isac_cortes82212@elpoli.edu.co' },
+    { followedId: 'juan_estrada82212@elpoli.edu.co', followerId: 'juan_adams82212@elpoli.edu.co' },
+    { followedId: 'juan_estrada82212@elpoli.edu.co', followerId: 'emmanuel_bolivar82212@elpoli.edu.co' },
+    { followedId: 'emmanuel_bolivar82212@elpoli.edu.co', followerId: 'isac_cortes82212@elpoli.edu.co' },
+    { followedId: 'emmanuel_bolivar82212@elpoli.edu.co', followerId: 'juan_adams82212@elpoli.edu.co' },
+    { followedId: 'emmanuel_bolivar82212@elpoli.edu.co', followerId: 'juan_estrada82212@elpoli.edu.co' }
+  ]
+
   await User.bulkCreate(users)
   await Topic.bulkCreate(topics)
   await Post.bulkCreate(posts)
   await Material.bulkCreate(materials)
   await Comment.bulkCreate(comments)
+  await Follower.bulkCreate(followers)
   console.log('Data inserted successfully')
 }
