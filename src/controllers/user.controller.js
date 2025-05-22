@@ -34,13 +34,7 @@ export class UserController {
           .json({ message: 'Email must end with @elpoli.edu.co' })
       }
 
-      if (!['student', 'monitor'].includes(role)) {
-        return res
-          .status(400)
-          .json({ message: 'Invalid role. Must be Student or Monitor' })
-      }
-
-      const existingUser = await User.findByPk(email)
+      const existingUser = await User.findOne({ where: { email } })
       if (existingUser) {
         return res.status(400).json({ message: 'User already exists' })
       }
@@ -67,8 +61,8 @@ export class UserController {
 
   getUser = async (req, res) => {
     try {
-      const { email } = req.params
-      const user = await User.findByPk(email, { attributes: { exclude: ['password'] } })
+      const { id } = req.params
+      const user = await User.findByPk(id, { attributes: { exclude: ['password'] } })
       if (user) {
         res.json(user)
       } else {
@@ -81,8 +75,8 @@ export class UserController {
 
   updateUser = async (req, res) => {
     try {
-      const { email } = req.params
-      const user = await User.findByPk(email)
+      const { id } = req.params
+      const user = await User.findByPk(id)
       if (!user) {
         return res.status(404).json({ message: 'User not found' })
       }
@@ -100,8 +94,8 @@ export class UserController {
 
   deleteUser = async (req, res) => {
     try {
-      const { email } = req.params
-      await User.destroy({ where: { email } })
+      const { id } = req.params
+      await User.destroy({ where: { id } })
       res.json({ message: 'User deleted' })
     } catch (error) {
       res.status(500).json({ message: error.message })
@@ -131,7 +125,7 @@ export class UserController {
         {
           email: user.email,
           role: user.role,
-          id: user.email
+          id: user.id
         },
         process.env.SECRET_KEY ?? 'LOLOMANSOLO',
         { expiresIn: '2h' }
@@ -141,6 +135,7 @@ export class UserController {
         token,
         role: user.role,
         email: user.email,
+        id: user.id,
         firstName: user.firstName
       })
     } catch (error) {
@@ -151,13 +146,13 @@ export class UserController {
   requestPasswordreset = async (req, res) => {
     try {
       const { email } = req.body
-      const user = await User.findByPk(email)
+      const user = await User.findOne({ where: { email } })
       if (!user) {
         return res.status(404).json({ message: 'User not found' })
       }
 
       const token = jwt.sign(
-        { email },
+        { email: user.email, id: user.id },
         process.env.RESET_KEY ?? 'LOLOMANSOLO2',
         {
           expiresIn: '1h'
@@ -196,7 +191,7 @@ export class UserController {
         token,
         process.env.RESET_KEY ?? 'LOLOMANSOLO2'
       )
-      const user = await User.findByPk(decoded.email)
+      const user = await User.findOne({ where: { email: decoded.email } })
 
       if (!user) { return res.status(400).json({ messaage: 'invalid or expired token' }) }
 

@@ -8,7 +8,7 @@ Table Personas {
   carrera varchar
   rol varchar
   edad integer
-  
+  calificación float
 }
 
 Table Publicaciones {
@@ -48,6 +48,11 @@ Table Preferencias {
   id_tema varchar [not null]
 }
 
+Table Calificaciones {
+  id_calificado varchar [not null]
+  id_calificador varchar [not null]
+}
+
 // Definición de relaciones
 Ref: Publicaciones.id_persona > Personas.correo
 Ref: Comentarios.id_publicacion > Publicaciones.id
@@ -58,3 +63,5 @@ Ref: Publicaciones.id_tema > Temas.id
 Ref: Material.id_publicacion > Publicaciones.id
 Ref: Preferencias.id_usuario > Personas.correo
 Ref: Preferencias.id_tema > Temas.id
+Ref: Calificaciones.id_calificado > Personas.correo
+Ref: Calificaciones.id_calificador > Personas.correo

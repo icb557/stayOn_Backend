@@ -2,7 +2,6 @@ import { Comment } from '../models/comment.model.js'
 import { Material } from '../models/material.model.js'
 import { Post } from '../models/post.model.js'
 import { Topic } from '../models/topic.model.js'
-import { Op } from 'sequelize'
 
 export class PostController {
   getAllPosts = async (req, res) => {
@@ -86,7 +85,7 @@ export class PostController {
     try {
       const { userId } = req.params
       const post = await Post.findAll({
-        where: { userId: { [Op.iLike]: userId } },
+        where: { userId },
         attributes: { exclude: ['topicId'] },
         include: [
           {
