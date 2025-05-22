@@ -1,5 +1,6 @@
 Table Personas {
-  correo varchar [primary key]
+  id integer [primary key]
+  correo varchar 
   contraseña varchar
   nombre varchar
   segundo_nombre varchar
@@ -14,7 +15,7 @@ Table Personas {
 Table Publicaciones {
   id integer [primary key]
   mensaje text
-  id_persona varchar [not null]
+  id_persona integer [not null]
   id_tema integer [not null]
   fecha datetime
 }
@@ -30,7 +31,7 @@ Table Comentarios {
   id_publicacion integer [not null]
   mensaje text
   fecha datetime
-  id_persona varchar [not null]
+  id_persona integer [not null]
 }
 
 Table Temas {
@@ -39,29 +40,29 @@ Table Temas {
 }
 
 Table Seguidores {
-  id_seguidor varchar [not null]
-  id_seguido varchar [not null]
+  id_seguidor integer [not null]
+  id_seguido integer [not null]
 }
 
 Table Preferencias {
-  id_usuario varchar [not null]
+  id_usuario integer [not null]
   id_tema varchar [not null]
 }
 
 Table Calificaciones {
-  id_calificado varchar [not null]
-  id_calificador varchar [not null]
+  id_calificado integer [not null]
+  id_calificador integer [not null]
 }
 
 // Definición de relaciones
-Ref: Publicaciones.id_persona > Personas.correo
+Ref: Publicaciones.id_persona > Personas.id
 Ref: Comentarios.id_publicacion > Publicaciones.id
-Ref: Comentarios.id_persona > Personas.correo
-Ref: Seguidores.id_seguidor > Personas.correo
-Ref: Seguidores.id_seguido > Personas.correo
+Ref: Comentarios.id_persona > Personas.id
+Ref: Seguidores.id_seguidor > Personas.id
+Ref: Seguidores.id_seguido > Personas.id
 Ref: Publicaciones.id_tema > Temas.id
 Ref: Material.id_publicacion > Publicaciones.id
-Ref: Preferencias.id_usuario > Personas.correo
+Ref: Preferencias.id_usuario > Personas.id
 Ref: Preferencias.id_tema > Temas.id
-Ref: Calificaciones.id_calificado > Personas.correo
-Ref: Calificaciones.id_calificador > Personas.correo
+Ref: Calificaciones.id_calificado > Personas.id
+Ref: Calificaciones.id_calificador > Personas.id

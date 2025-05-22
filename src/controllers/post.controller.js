@@ -2,6 +2,7 @@ import { Comment } from '../models/comment.model.js'
 import { Material } from '../models/material.model.js'
 import { Post } from '../models/post.model.js'
 import { Topic } from '../models/topic.model.js'
+import { User } from '../models/user.model.js'
 
 export class PostController {
   getAllPosts = async (req, res) => {
@@ -10,9 +11,21 @@ export class PostController {
         attributes: { exclude: ['topicId'] },
         include: [
           {
+            model: User,
+            as: 'User',
+            attributes: { exclude: ['password'] }
+          },
+          {
             model: Comment,
             as: 'Comments',
-            attributes: { exclude: ['postId'] }
+            attributes: { exclude: ['postId'] },
+            include: [
+              {
+                model: User,
+                as: 'User',
+                attributes: { exclude: ['password'] }
+              }
+            ]
           },
           {
             model: Material,
@@ -23,7 +36,6 @@ export class PostController {
             model: Topic
           }
         ]
-
       })
       res.json(posts)
     } catch (error) {
@@ -56,9 +68,21 @@ export class PostController {
         attributes: { exclude: ['topicId'] },
         include: [
           {
+            model: User,
+            as: 'User',
+            attributes: { exclude: ['password'] }
+          },
+          {
             model: Comment,
             as: 'Comments',
-            attributes: { exclude: ['postId'] }
+            attributes: { exclude: ['postId'] },
+            include: [
+              {
+                model: User,
+                as: 'User',
+                attributes: { exclude: ['password'] }
+              }
+            ]
           },
           {
             model: Material,
@@ -89,9 +113,21 @@ export class PostController {
         attributes: { exclude: ['topicId'] },
         include: [
           {
+            model: User,
+            as: 'User',
+            attributes: { exclude: ['password'] }
+          },
+          {
             model: Comment,
             as: 'Comments',
-            attributes: { exclude: ['postId'] }
+            attributes: { exclude: ['postId'] },
+            include: [
+              {
+                model: User,
+                as: 'User',
+                attributes: { exclude: ['password'] }
+              }
+            ]
           },
           {
             model: Material,
