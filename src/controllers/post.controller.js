@@ -13,7 +13,7 @@ export class PostController {
           {
             model: User,
             as: 'User',
-            attributes: { exclude: ['password'] }
+            attributes: { exclude: ['password', 'id'] }
           },
           {
             model: Comment,
@@ -23,7 +23,7 @@ export class PostController {
               {
                 model: User,
                 as: 'User',
-                attributes: { exclude: ['password'] }
+                attributes: { exclude: ['password', 'id'] }
               }
             ]
           },
@@ -70,7 +70,7 @@ export class PostController {
           {
             model: User,
             as: 'User',
-            attributes: { exclude: ['password'] }
+            attributes: { exclude: ['password', 'id'] }
           },
           {
             model: Comment,
@@ -80,7 +80,7 @@ export class PostController {
               {
                 model: User,
                 as: 'User',
-                attributes: { exclude: ['password'] }
+                attributes: { exclude: ['password', 'id'] }
               }
             ]
           },
@@ -115,7 +115,7 @@ export class PostController {
           {
             model: User,
             as: 'User',
-            attributes: { exclude: ['password'] }
+            attributes: { exclude: ['password', 'id'] }
           },
           {
             model: Comment,
@@ -125,7 +125,7 @@ export class PostController {
               {
                 model: User,
                 as: 'User',
-                attributes: { exclude: ['password'] }
+                attributes: { exclude: ['password', 'id'] }
               }
             ]
           },
