@@ -11,10 +11,6 @@ export class UserController {
         attributes: { exclude: ["password"] },
       });
       res.json(users);
-      const users = await User.findAll({
-        attributes: { exclude: ["password"] },
-      });
-      res.json(users);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -73,10 +69,6 @@ export class UserController {
 
   getUser = async (req, res) => {
     try {
-      const { email } = req.params;
-      const user = await User.findByPk(email, {
-        attributes: { exclude: ["password"] },
-      });
       const { email } = req.params;
       const user = await User.findByPk(email, {
         attributes: { exclude: ["password"] },
