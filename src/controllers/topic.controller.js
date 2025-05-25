@@ -121,6 +121,8 @@ export class TopicController {
               model: Material,
               as: 'Materials',
               attributes: { exclude: ['postId'] }
+            }, {
+              model: Topic
             }
           ]
         }]
