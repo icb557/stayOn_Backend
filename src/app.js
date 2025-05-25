@@ -5,6 +5,7 @@ import cors from 'cors'
 import { userRouters } from './routes/user.routes.js'
 import { postRouters } from './routes/post.routes.js'
 import { profileRouters } from './routes/profile.routes.js'
+import { topicRouter } from './routes/topic.routes.js'
 
 const app = express()
 
@@ -14,5 +15,6 @@ app.use(express.json())
 app.use(userRouters)
 app.use(postRouters)
 app.use(profileRouters)
+app.use(topicRouter)
 
 export default app
