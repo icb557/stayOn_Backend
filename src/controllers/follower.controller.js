@@ -38,7 +38,26 @@ export class FollowerController {
             as: 'Followers',
             attributes: { exclude: ['password'] },
             through: { attributes: [] }
-          },
+          }
+        ]
+      })
+      if (followers) {
+        res.json(followers.Followers)
+      } else {
+        res.status(404).json({ error: 'User not found' })
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve followers' })
+    }
+  }
+
+  static async getFollowing (req, res) {
+    const { userId } = req.params
+
+    try {
+      const following = await User.findByPk(userId, {
+        attributes: { exclude: ['password'] },
+        include: [
           {
             model: User,
             as: 'Following',
@@ -47,13 +66,13 @@ export class FollowerController {
           }
         ]
       })
-      if (followers) {
-        res.json(followers)
+      if (following) {
+        res.json(following.Following)
       } else {
         res.status(404).json({ error: 'User not found' })
       }
     } catch (error) {
-      res.status(500).json({ error: 'Failed to retrieve followers' })
+      res.status(500).json({ error: 'Failed to retrieve following' })
     }
   }
 }
