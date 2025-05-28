@@ -7,6 +7,7 @@ import { postRouters } from './routes/post.routes.js'
 import { profileRouters } from './routes/profile.routes.js'
 import { topicRouter } from './routes/topic.routes.js'
 import { followerRouter } from './routes/follower.routes.js'
+import { commentRouters } from './routes/comment.routes.js'
 
 const app = express()
 
@@ -18,5 +19,6 @@ app.use(postRouters)
 app.use(profileRouters)
 app.use(topicRouter)
 app.use(followerRouter)
+app.use(commentRouters)
 
 export default app

@@ -156,7 +156,7 @@ export class PostController {
       if (!postDeleted) {
         return res.status(404).json({ message: 'Post does not exist', text: 'The post you are trying to delete does not exists', forUser: true })
       }
-      res.status(204)
+      res.status(200).json({ message: 'Post deleted successfully', forUser: true })
     } catch (error) {
       return res.status(500).json({ message: error.message, forUser: false })
     }
