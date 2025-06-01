@@ -45,19 +45,30 @@ export class PostController {
 
   createPost = async (req, res) => {
     try {
-      const { materials, ...post } = req.body
-      const mats = new Set(materials)
+      const { message, topicId, userId } = req.body
 
-      let newPost = await Post.create(post)
-      mats.forEach(async (element) => {
-        await Material.create({ name: element.name, uri: element.uri, type: element.type, postId: newPost.id })
+      const newPost = await Post.create({
+        message,
+        topicId,
+        userId,
+        date: new Date()
       })
 
-      newPost = { ...newPost.dataValues, materials: [...mats] }
+      const files = req.files
 
-      return res.status(201).json(newPost)
+      const materials = files.map(file => ({
+        name: file.originalname,
+        uri: file.filename,
+        type: file.mimetype,
+        postId: newPost.id
+      }))
+
+      await Material.bulkCreate(materials)
+
+      res.status(201).json({ message: 'Post created succefully' })
     } catch (error) {
-      return res.status(500).json({ message: error.message, forUser: false })
+      console.error(error)
+      res.status(500).json({ error: 'Error creating Post' })
     }
   }
 

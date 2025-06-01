@@ -2,6 +2,10 @@ import express from 'express'
 import 'dotenv/config'
 import cors from 'cors'
 
+import fs from 'fs'
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
+
 import { userRouters } from './routes/user.routes.js'
 import { postRouters } from './routes/post.routes.js'
 import { profileRouters } from './routes/profile.routes.js'
@@ -10,6 +14,16 @@ import { followerRouter } from './routes/follower.routes.js'
 import { commentRouters } from './routes/comment.routes.js'
 
 const app = express()
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const uploadsDir = path.join(__dirname, '../uploads')
+
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true })
+  console.log('📁 Carpeta "uploads" creada automáticamente.')
+}
 
 app.use(cors())
 app.use(express.json())
