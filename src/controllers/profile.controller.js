@@ -4,6 +4,7 @@ import { User } from '../models/user.model.js'
 import { Post } from '../models/post.model.js'
 import { Comment } from '../models/comment.model.js'
 import { Topic } from '../models/topic.model.js'
+import { Material } from '../models/material.model.js'
 
 export class ProfileController {
   getProfile = async (req, res) => {
@@ -25,6 +26,10 @@ export class ProfileController {
               },
               {
                 model: Topic
+              }, {
+                model: Material,
+                as: 'Materials',
+                attributes: { exclude: ['postId'] }
               }
             ]
           },

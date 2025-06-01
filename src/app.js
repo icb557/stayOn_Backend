@@ -34,5 +34,6 @@ app.use(profileRouters)
 app.use(topicRouter)
 app.use(followerRouter)
 app.use(commentRouters)
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 export default app
