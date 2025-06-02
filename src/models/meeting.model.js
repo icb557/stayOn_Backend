@@ -25,12 +25,16 @@ export const Meeting = sequelize.define(
         isUrl: true,
       },
     },
-    userEmail: {
-      type: DataTypes.STRING,
+    fechaReunion: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: "Users",
-        key: "email",
+        key: "id",
       },
     },
   },
@@ -39,5 +43,5 @@ export const Meeting = sequelize.define(
   }
 );
 
-User.hasMany(Meeting, { foreignKey: "userEmail" });
-Meeting.belongsTo(User, { foreignKey: "userEmail" });
+User.hasMany(Meeting, { foreignKey: "userId" });
+Meeting.belongsTo(User, { foreignKey: "userId" });
