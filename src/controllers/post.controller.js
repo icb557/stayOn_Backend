@@ -3,6 +3,7 @@ import { Material } from '../models/material.model.js'
 import { Post } from '../models/post.model.js'
 import { Topic } from '../models/topic.model.js'
 import { User } from '../models/user.model.js'
+import { Op } from 'sequelize'
 
 export class PostController {
   getAllPosts = async (req, res) => {
@@ -56,7 +57,7 @@ export class PostController {
 
       const files = req.files
 
-      const materials = files.map(file => ({
+      const materials = files.map((file) => ({
         name: file.originalname,
         uri: file.filename,
         type: file.mimetype,
@@ -165,9 +166,15 @@ export class PostController {
       const { id } = req.params
       const postDeleted = await Post.destroy({ where: { id } })
       if (!postDeleted) {
-        return res.status(404).json({ message: 'Post does not exist', text: 'The post you are trying to delete does not exists', forUser: true })
+        return res.status(404).json({
+          message: 'Post does not exist',
+          text: 'The post you are trying to delete does not exists',
+          forUser: true
+        })
       }
-      res.status(200).json({ message: 'Post deleted successfully', forUser: true })
+      res
+        .status(200)
+        .json({ message: 'Post deleted successfully', forUser: true })
     } catch (error) {
       return res.status(500).json({ message: error.message, forUser: false })
     }
@@ -178,13 +185,62 @@ export class PostController {
       const { id } = req.params
       const post = await Post.findByPk(id)
       if (!post) {
-        return res.status(404).json({ message: 'Post does not exist', text: 'The post you are trying to update does not exists', forUser: true })
+        return res.status(404).json({
+          message: 'Post does not exist',
+          text: 'The post you are trying to update does not exists',
+          forUser: true
+        })
       }
       post.set({ message: req.body.message, topicId: req.body.topicId })
       await post.save()
       res.status(200).json(req.body)
     } catch (error) {
       return res.status(500).json({ message: error.message, forUser: false })
+    }
+  }
+
+  getPostsByUserPreferences = async (req, res) => {
+    try {
+      const { userId } = req.params
+
+      const user = await User.findByPk(userId, {
+        include: [{ model: Topic, through: 'Preference' }]
+      })
+
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' })
+      }
+
+      const topicIds = user.Topics.map((topic) => topic.id)
+
+      if (topicIds.length === 0) {
+        return res.json({ message: 'No preferences found', posts: [] })
+      }
+
+      const posts = await Post.findAll({
+        where: {
+          topicId: {
+            [Op.in]: topicIds
+          }
+        },
+        include: [
+          { model: User, attributes: ['id', 'firstName', 'lastName'] },
+          { model: Topic },
+          { model: Material },
+          {
+            model: Comment,
+            include: [
+              { model: User, attributes: ['id', 'firstName', 'lastName'] }
+            ]
+          }
+        ],
+        order: [['date', 'DESC']]
+      })
+
+      res.json(posts)
+    } catch (error) {
+      console.error('Error in getPostsByUserPreferences:', error)
+      res.status(500).json({ message: error.message })
     }
   }
 }

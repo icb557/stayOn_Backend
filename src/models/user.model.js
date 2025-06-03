@@ -57,6 +57,7 @@ User.belongsToMany(Topic, {
   foreignKey: 'userId',
   otherKey: 'topicId'
 })
+
 Topic.belongsToMany(User, {
   through: Preference,
   foreignKey: 'topicId',
